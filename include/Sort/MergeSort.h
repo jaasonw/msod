@@ -1,5 +1,7 @@
 #pragma once
 
+namespace Sort {
+
 template <typename T>
 void merge(T* array, int midpoint, int size) {
     int left = 0;
@@ -8,18 +10,17 @@ void merge(T* array, int midpoint, int size) {
     T merged[size];
     int merged_index = 0;
 
-    while(left < midpoint && right < size) {
+    while (left < midpoint && right < size) {
         if (array[left] >= array[right]) {
             merged[merged_index++] = array[right++];
-        }
-        else if (array[left] < array[right]) {
+        } else if (array[left] < array[right]) {
             merged[merged_index++] = array[left++];
         }
     }
-    while(right < size) {
+    while (right < size) {
         merged[merged_index++] = array[right++];
     }
-    while(left < midpoint) {
+    while (left < midpoint) {
         merged[merged_index++] = array[left++];
     }
     for (int i = 0; i < size; i++) {
@@ -36,3 +37,5 @@ void merge_sort(T* array, unsigned int size) {
         merge(array, middle, size);
     }
 }
+
+} // namespace Sort
