@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 
+namespace LinkedList {
 
 template <typename T>
 struct Node {
@@ -13,3 +14,5 @@ struct Node {
         return outs;
     }
 };
+
+} // namespace LinkedList
