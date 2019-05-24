@@ -17,7 +17,7 @@ public:
     // set a new string as the input string
     void set_string(const char* str);
 
-    static const int MAX_BUFFER = 255;
+    static const int MAX_BUFFER = 500;
 
 private:
     // constants
