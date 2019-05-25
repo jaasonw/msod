@@ -1,49 +1,34 @@
 /*
  * Author: Jason Wong
- * Project: 
- * Purpose: 
+ * Project: merge sort on disk
+ * Purpose: implement a mergesort that can sort large files of numbers that
+ *          do not fit in ram
  * Notes:
  */
-#include <cctype>
-#include <fstream>
+#include "merge_sort_on_disk.h"
+#include "sort_util.h"
+#include <chrono>
 #include <iostream>
 #include <string>
 
 using namespace std;
 
 int main(int argc, char const* argv[]) {
-    // reads in a csv of values
-    const int READ_SIZE = 500;
-    const int SORT_SIZE = 500;
-    char read_buffer[READ_SIZE] = "";
-    char sort_buffer[SORT_SIZE] = "";
+    
+    int numbers = 90000;
 
-    std::ifstream fin;
-    int num = 0;
-    char a;
-    cin >> a;
-    fin.open("numbers.txt");
-        fin>>num;
-    // cout << fin.rd
-    int counter = 0;
-    
-    while (!fin.eof()) {
-        std::string filename = "output/" + std::to_string(counter) + ".txt";
-        std::ofstream fout;
-        fout.open(filename);
-        fout << num;
-        fout.close();
-        counter++;
-    }
-    cout << num;
-    // fin.close();
-    // fin.read(read_buffer, READ_SIZE);
-    // std::string num = "";
-    
-    // split into 1 number per file for a bottom up merge sort
-    // for (int i = 0; i < fin.gcount(); i++) {
-    //     if (read_buffer[i] != )
-    // }
+    string in = "test.txt";
+    string out = "output.txt";
+
+    auto t0 = std::chrono::high_resolution_clock::now();
+    cout << "Generating file with " << numbers << " numbers" << endl;
+    msod_util::generate_random(in, numbers);
+    msod::sort_file(in, out, true);
+    cout << ((msod_util::is_sorted(out)) ? "SORTED" : "NOT SORTED") << endl;
+    auto t1 = std::chrono::high_resolution_clock::now();
+    auto duration =
+        std::chrono::duration_cast<std::chrono::seconds>(t1 - t0).count();
+    cout << "Operation took: " << duration << " seconds" << endl;
 
     cout << endl;
     system("pause");
