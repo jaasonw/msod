@@ -2,7 +2,6 @@
 #include "Queue/Queue.h"
 #include "Sort/MergeSort.h"
 #include <cassert>
-#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <string>
