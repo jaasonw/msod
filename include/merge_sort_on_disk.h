@@ -1,9 +1,9 @@
 #pragma once
-#include "Queue/Queue.h"
 #include "Sort/MergeSort.h"
 #include <cassert>
 #include <fstream>
 #include <iostream>
+#include <queue>
 #include <string>
 
 namespace msod {
@@ -140,10 +140,12 @@ void merge_files(std::string file1, std::string file2, std::string file3) {
 }
 
 // mergesorts every file in the queue until 1 sorted array remains
-void sort_queue(Queue<std::string>& filenames) {
+void sort_queue(std::queue<std::string>& filenames) {
     while (filenames.size() >= 2) {
-        std::string file1 = filenames.pop();
-        std::string file2 = filenames.pop();
+        std::string file1 = filenames.back();
+        filenames.pop();
+        std::string file2 = filenames.back();
+        filenames.pop();
         std::string outfile = '_' + file1;
         merge_files(file1, file2, outfile);
         // delete the 2 files we just merged
@@ -159,7 +161,7 @@ void sort_queue(Queue<std::string>& filenames) {
 
 void sort_file(std::string infile, std::string outfile, bool verbose = false) {
     // use a queue to store filenames in the order we want to sort
-    Queue<std::string> queue;
+    std::queue<std::string> queue;
 
     if (verbose)
         std::cout << "Splitting file into chunks" << std::endl;
@@ -186,7 +188,8 @@ void sort_file(std::string infile, std::string outfile, bool verbose = false) {
     sort_queue(queue);
 
     // rename the file in the queue to sorted
-    std::string old = (OUTPUT_DIRECTORY + queue.pop());
+    std::string old = (OUTPUT_DIRECTORY + queue.back());
+    queue.pop();
     rename(old.c_str(), outfile.c_str());
 }
 

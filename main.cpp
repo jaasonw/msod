@@ -15,7 +15,7 @@ using namespace std;
 
 int main(int argc, char const* argv[]) {
     
-    int numbers = 90000;
+    int numbers = 900000;
 
     string in = "test.txt";
     string out = "output.txt";
