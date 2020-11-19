@@ -13,9 +13,9 @@ const char* OUTPUT_DIRECTORY = "output/";
 // the max size of the read buffer
 const int READ_BUFFER_CAP = 500;
 // number of numbers in each file chunk
-const int CHUNK_SIZE = READ_BUFFER_CAP;
+const int CHUNK_SIZE = 50000;
 // the max number of filenames the sort queue may hold
-const int SORT_QUEUE_CAP = 10;
+const int SORT_QUEUE_CAP = 100;
 
 // chunk the input into n numbers per file
 // returns the number of files created
@@ -142,9 +142,9 @@ void merge_files(std::string file1, std::string file2, std::string file3) {
 // mergesorts every file in the queue until 1 sorted array remains
 void sort_queue(std::queue<std::string>& filenames) {
     while (filenames.size() >= 2) {
-        std::string file1 = filenames.back();
+        std::string file1 = filenames.front();
         filenames.pop();
-        std::string file2 = filenames.back();
+        std::string file2 = filenames.front();
         filenames.pop();
         std::string outfile = '_' + file1;
         merge_files(file1, file2, outfile);
@@ -155,7 +155,6 @@ void sort_queue(std::queue<std::string>& filenames) {
         rename((OUTPUT_DIRECTORY + outfile).c_str(),
                (OUTPUT_DIRECTORY + file1).c_str());
         filenames.push(file1);
-        // std::cout << filenames << std::endl;
     }
 }
 
@@ -188,7 +187,7 @@ void sort_file(std::string infile, std::string outfile, bool verbose = false) {
     sort_queue(queue);
 
     // rename the file in the queue to sorted
-    std::string old = (OUTPUT_DIRECTORY + queue.back());
+    std::string old = (OUTPUT_DIRECTORY + queue.front());
     queue.pop();
     rename(old.c_str(), outfile.c_str());
 }
