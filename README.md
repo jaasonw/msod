@@ -3,20 +3,21 @@
 Mergesorts arbitrarily large files using disk space instead of ram. This is a true disk sort, meaning there is no instance in time where the entire data set ever gets
 loaded into memory. 
 
-Regardless of the size of the data this program will only consume around 500kb of ram
+Regardless of the size of the data this program will consume a approximately constant amount of ram, configurable through chunk size (larger chunks = more ram = faster sort). 
+At a 50,000 chunk size, this consumes less than 1MB of ram
 
-![image](https://i.imgur.com/jubxu3i.png)
+![image](https://i.imgur.com/ENw9j1j.png)
 
-That being said, because this is optimized for memory usage, it isn't particularly fast at sorting, but here are benchmarks anyways (chunk size: 500)
+That being said, because this is optimized for memory usage, it isn't particularly fast at sorting, but here are benchmarks anyways (chunk size: 50,000)
 
-90000 numbers (~0.5MB): 25s (0:25)
+900000 numbers (~5MB): 30s (00:00:30)
 
-900000 numbers (~5MB): 270s (4:30)
+9000000 numbers (~58MB):  286s (00:04:46)
 
-9000000 numbers (~58MB): 2726s (45:25)
+90000000 numbers (~571MB):  16209s (04:30:09)
 
 ## How it works
-1. Split input into chunks of 500 numbers
+1. Split input into chunks of 50,000 numbers
 2. Load small chunks into ram and perform an in memory mergesort on these small chunks so we end up with sorted chunks (this is the only time sorting happens in memory)
 3. Place all files into a sorting queue
 4. Remove 2 files from the queue and perform an on disk merge operation and requeue the resulting file
