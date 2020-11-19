@@ -3,7 +3,7 @@
 Mergesorts arbitrarily large files using disk space instead of ram. This is a true disk sort, meaning there is no instance in time where the entire data set ever gets
 loaded into memory. 
 
-Regardless of the size of the data this program will consume a approximately constant amount of ram, configurable through chunk size (larger chunks = more ram = faster sort). 
+Regardless of the size of the data, this program will consume an approximately constant amount of ram, configurable through chunk size (larger chunks = more ram = faster sort). 
 At a 50,000 chunk size, this consumes less than 1MB of ram
 
 ![image](https://i.imgur.com/ENw9j1j.png)
